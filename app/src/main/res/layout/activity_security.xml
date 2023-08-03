@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".module.security.view.SecurityActivity">
+
+        <EditText
+            android:id="@+id/edtPin"
+            android:layout_width="@dimen/dimen_0"
+            android:layout_height="@dimen/dimen_0"
+            android:background="@color/white"
+            android:editable="false"
+            android:gravity="center"
+            android:inputType="none"
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/rcvKeyBoard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvKeyBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

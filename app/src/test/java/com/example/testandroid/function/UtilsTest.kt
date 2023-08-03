@@ -1,22 +1,28 @@
 package com.example.testandroid.function
 
+import org.junit.Assert
 import org.junit.Assert.*
 
+import org.junit.Before
 import org.junit.Test
 
 class UtilsTest {
 
-    @Test
-    fun isCorrectEmail_fail() {
-        var utils = Utils()
-        val result = utils.isCorrectEmail("long")
-        assertEquals(false, result)
+    @Before
+    fun setUp() {
+
     }
 
     @Test
-    fun isCorrectEmail_correct() {
-        var utils = Utils()
-        val result = utils.isCorrectEmail("admin")
-        assertEquals(true, result)
+    fun testCorrectValue() {
+        val result = Utils().isCorrectEmail("admin")
+        Assert.assertEquals(true, result)
+    }
+
+    @Test
+    fun testIncorrectValue() {
+        Assert.assertEquals(false, Utils().isCorrectEmail("long"))
+        Assert.assertEquals(false, Utils().isCorrectEmail("long1"))
+        assertFalse(Utils().isCorrectEmail("long1344"))
     }
 }
