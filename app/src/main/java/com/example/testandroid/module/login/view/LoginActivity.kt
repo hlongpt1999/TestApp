@@ -2,9 +2,10 @@ package com.example.testandroid.module.login.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,10 +19,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.room.Room
+import com.example.testandroid.function.OpenActivity.open
 import com.example.testandroid.function.OpenActivity.openHomeActivity
 import com.example.testandroid.function.ToastUtils
 import com.example.testandroid.function.Utils
+import com.example.testandroid.model.ScreenEnum
 import com.example.testandroid.model.User
 import com.example.testandroid.model.UserDao
 import com.example.testandroid.model.UserInfoDatabase
@@ -33,10 +37,14 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 
 
-class LoginActivity : ComponentActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private var database: UserInfoDatabase? = null
     private var userDao: UserDao? = null
+
+    //Sign in with fingerprint
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,8 +134,8 @@ class LoginActivity : ComponentActivity() {
                         .height(56.dp)
                         .padding(top = 16.dp),
                     onClick = {
-                              handleSignInWithGoogle()
-                              },
+                        handleSignInWithGoogle()
+                    },
                     elevation = ButtonDefaults.elevation(
                         defaultElevation = 16.dp,
                         pressedElevation = 32.dp,
@@ -135,6 +143,27 @@ class LoginActivity : ComponentActivity() {
                     )
                 ) {
                     Text(text = "Sign In With Google copy - paste")
+                }
+            }
+
+            initBiometricPrompt("Sign in")
+            handleBiometricPromptResult()
+            item {
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .height(56.dp)
+                        .padding(top = 16.dp),
+                    onClick = {
+                        handleSignInWithFingerprint()
+                    },
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 16.dp,
+                        pressedElevation = 32.dp,
+                        disabledElevation = 0.dp
+                    )
+                ) {
+                    Text(text = "Login with fingerprint")
                 }
             }
         }
@@ -257,5 +286,38 @@ class LoginActivity : ComponentActivity() {
         } catch (e: ApiException) {
             ToastUtils.showToastLongTime("Failed with: " + e.message, this)
         }
+    }
+
+    private fun handleSignInWithFingerprint() {
+        biometricPrompt.authenticate(promptInfo)
+    }
+
+    private fun initBiometricPrompt(title: String) {
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(title)
+            .setDeviceCredentialAllowed(true).build()
+    }
+
+    private fun handleBiometricPromptResult() {
+        biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    super.onAuthenticationSucceeded(result)
+                    this@LoginActivity.open(ScreenEnum.HOME, true)
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                }
+            })
     }
 }
