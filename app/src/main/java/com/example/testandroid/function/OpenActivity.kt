@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import com.example.testandroid.MainActivity
 import com.example.testandroid.PipActivity
+import com.example.testandroid.function.OpenActivity.openLoginActivity
+import com.example.testandroid.model.ScreenEnum
 import com.example.testandroid.module.flash.FlashActivity
 import com.example.testandroid.module.jetpackcompose.view.HomeActivity
+import com.example.testandroid.module.login.view.LoginActivity
 import com.example.testandroid.module.retrofit.view.RetrofitActivity
 import com.example.testandroid.module.security.view.SecurityActivity
 import com.example.testandroid.module.todo.view.TodoActivity
@@ -45,6 +48,39 @@ object OpenActivity {
     fun Activity.openHomeActivity(finish: Boolean = true) {
         this.startActivity(Intent(this, HomeActivity::class.java))
         if (finish) {
+            this.finish()
+        }
+    }
+
+    fun Activity.openLoginActivity(finish: Boolean = true) {
+        this.startActivity(Intent(this, LoginActivity::class.java))
+        if (finish) {
+            this.finish()
+        }
+    }
+
+    fun Activity.open(screen: ScreenEnum, finishActivity: Boolean = false) {
+        when (screen) {
+            ScreenEnum.FLASH -> {
+                this.startActivity(Intent(this, FlashActivity::class.java))
+            }
+            ScreenEnum.SECURITY -> {
+                this.startActivity(Intent(this, SecurityActivity::class.java))
+            }
+            ScreenEnum.LOGIN -> {
+                this.startActivity(Intent(this, LoginActivity::class.java))
+            }
+            ScreenEnum.MAIN -> {
+                this.startActivity(Intent(this, MainActivity::class.java))
+            }
+            ScreenEnum.HOME -> {
+                this.startActivity(Intent(this, HomeActivity::class.java))
+            }
+            ScreenEnum.TODO -> {
+                this.startActivity(Intent(this, TodoActivity::class.java))
+            }
+        }
+        if (finishActivity) {
             this.finish()
         }
     }

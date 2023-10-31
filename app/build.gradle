@@ -98,4 +98,11 @@ dependencies {
 
     //GG play service location
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    //Room database
+    def room_version = "2.5.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
 }

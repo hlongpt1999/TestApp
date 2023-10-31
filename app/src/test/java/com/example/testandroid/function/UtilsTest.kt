@@ -15,14 +15,14 @@ class UtilsTest {
 
     @Test
     fun testCorrectValue() {
-        val result = Utils().isCorrectEmail("admin")
+        val result = Utils.isCorrectEmail("admin")
         Assert.assertEquals(true, result)
     }
 
     @Test
     fun testIncorrectValue() {
-        Assert.assertEquals(false, Utils().isCorrectEmail("long"))
-        Assert.assertEquals(false, Utils().isCorrectEmail("long1"))
-        assertFalse(Utils().isCorrectEmail("long1344"))
+        Assert.assertEquals(false, Utils.isCorrectEmail("long"))
+        Assert.assertEquals(false, Utils.isCorrectEmail("long1"))
+        assertFalse(Utils.isCorrectEmail("long1344"))
     }
 }

@@ -8,6 +8,7 @@ import com.example.testandroid.R
 import com.example.testandroid.databinding.ActivityFlashBinding
 import com.example.testandroid.databinding.ActivitySecurityBinding
 import com.example.testandroid.function.OpenActivity.openHomeActivity
+import com.example.testandroid.function.OpenActivity.openLoginActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,7 +39,7 @@ class SecurityActivity : AppCompatActivity(), View.OnClickListener,
                 return
             }
         }
-        this.openHomeActivity()
+        this.openLoginActivity()
     }
 
     private fun initKeyBoard() {
@@ -68,7 +69,7 @@ class SecurityActivity : AppCompatActivity(), View.OnClickListener,
             val textAfter = binding.edtPin.text.toString() + text
             binding.edtPin.setText(textAfter)
         } else if (binding.edtPin.text.toString() == "2299")  {
-            this.openHomeActivity()
+            this.openLoginActivity()
         }
     }
 }

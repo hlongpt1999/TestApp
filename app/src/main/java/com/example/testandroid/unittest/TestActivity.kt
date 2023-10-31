@@ -24,7 +24,7 @@ class TestActivity : AppCompatActivity() {
 
     private fun login() {
         binding?.apply {
-            if (Utils().isCorrectEmail(edtEmail.text.toString()) && edtPassword.text.toString() == "admin") {
+            if (Utils.isCorrectEmail(edtEmail.text.toString()) && edtPassword.text.toString() == "admin") {
                 this@TestActivity.openPipActivity()
             }
         }
