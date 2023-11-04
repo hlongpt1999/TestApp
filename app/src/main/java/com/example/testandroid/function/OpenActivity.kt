@@ -3,6 +3,7 @@ package com.example.testandroid.function
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import com.example.testandroid.MainActivity
 import com.example.testandroid.PipActivity
 import com.example.testandroid.function.OpenActivity.openLoginActivity
@@ -59,27 +60,29 @@ object OpenActivity {
         }
     }
 
-    fun Activity.open(screen: ScreenEnum, finishActivity: Boolean = false) {
-        when (screen) {
+    fun Activity.open(screen: ScreenEnum, finishActivity: Boolean = false, bundle: Bundle? = null) {
+        val intent = when (screen) {
             ScreenEnum.FLASH -> {
-                this.startActivity(Intent(this, FlashActivity::class.java))
+                Intent(this, FlashActivity::class.java)
             }
             ScreenEnum.SECURITY -> {
-                this.startActivity(Intent(this, SecurityActivity::class.java))
+                Intent(this, SecurityActivity::class.java)
             }
             ScreenEnum.LOGIN -> {
-                this.startActivity(Intent(this, LoginActivity::class.java))
+                Intent(this, LoginActivity::class.java)
             }
             ScreenEnum.MAIN -> {
-                this.startActivity(Intent(this, MainActivity::class.java))
+                Intent(this, MainActivity::class.java)
             }
             ScreenEnum.HOME -> {
-                this.startActivity(Intent(this, HomeActivity::class.java))
+                Intent(this, HomeActivity::class.java)
             }
             ScreenEnum.TODO -> {
-                this.startActivity(Intent(this, TodoActivity::class.java))
+                Intent(this, TodoActivity::class.java)
             }
         }
+        this.startActivity(intent, bundle)
+
         if (finishActivity) {
             this.finish()
         }

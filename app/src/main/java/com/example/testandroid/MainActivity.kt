@@ -4,17 +4,13 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.testandroid.function.OpenActivity.openFlashActivity
-import com.example.testandroid.function.OpenActivity.openHomeActivity
-import com.example.testandroid.function.OpenActivity.openSecurityActivity
+import com.example.testandroid.function.OpenActivity.open
 import com.example.testandroid.function.ToastUtils.showToastLongTime
+import com.example.testandroid.model.ScreenEnum
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -30,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         askNotificationPermission()
         getFCMToken()
-        this.openSecurityActivity()
+        this.open(ScreenEnum.SECURITY, true)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
