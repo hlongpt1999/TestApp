@@ -1,6 +1,5 @@
 package com.example.testandroid.module.login.view
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -20,22 +19,21 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.testandroid.function.OpenActivity.open
 import com.example.testandroid.function.OpenActivity.openHomeActivity
 import com.example.testandroid.function.ToastUtils
-import com.example.testandroid.function.Utils
+import com.example.testandroid.function.ToastUtils.showToastLongTime
 import com.example.testandroid.model.ScreenEnum
 import com.example.testandroid.model.User
 import com.example.testandroid.model.UserDao
 import com.example.testandroid.model.UserInfoDatabase
 import com.example.testandroid.module.login.viewmodel.AuthResultContract
+import com.example.testandroid.module.login.viewmodel.LoginViewModel
 import com.example.testandroid.module.todo.view.ui.theme.TestAndroidTheme
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
-
 
 class LoginActivity : AppCompatActivity() {
 
@@ -46,10 +44,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
+    //viewmodel
+    private var viewModel: LoginViewModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        initDatabase()
 //        handleAutoLogin()
+        setUpViewModel()
         setContent {
             TestAndroidTheme {
                 Surface(
@@ -57,6 +59,21 @@ class LoginActivity : AppCompatActivity() {
                     color = Color.White
                 ) {
                     BodyContent()
+                }
+            }
+        }
+    }
+
+    private fun setUpViewModel() {
+        viewModel = ViewModelProvider(this)[LoginViewModel::class.java].apply {
+            saveUserToFirebaseLiveData.observe(this@LoginActivity) {
+                it?.let {
+                    if (it) {
+                        this@LoginActivity.open(ScreenEnum.HOME)
+                    } else {
+                        this@LoginActivity.showToastLongTime("Sign in failed when saving data to Firebase")
+                    }
+                    saveUserToFirebaseLiveData.value = null
                 }
             }
         }
@@ -125,25 +142,6 @@ class LoginActivity : AppCompatActivity() {
 
             item {
                 GoogleSignInUI()
-            }
-
-            item {
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .height(56.dp)
-                        .padding(top = 16.dp),
-                    onClick = {
-                        handleSignInWithGoogle()
-                    },
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 16.dp,
-                        pressedElevation = 32.dp,
-                        disabledElevation = 0.dp
-                    )
-                ) {
-                    Text(text = "Sign In With Google copy - paste")
-                }
             }
 
             initBiometricPrompt("Sign in")
@@ -222,12 +220,13 @@ class LoginActivity : AppCompatActivity() {
                 try {
                     val account = it?.getResult(ApiException::class.java)
                     if (account == null) {
-                        text = "Sign in failed"
+                        text = "Sign in failed with null account"
                     } else {
                         ToastUtils.showToastLongTime(
-                            "Sign in success with : account.displayName",
+                            "Sign in success with :" + account.displayName,
                             this
                         )
+                        handleLoginWithGoogleSuccess(account)
                     }
                 } catch (e: ApiException) {
                     text = "Sign in failed because: " + e.message
@@ -265,27 +264,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleSignInWithGoogle() {
-        val signInIntent: Intent = Utils.getGoogleSignInClient(this).signInIntent
-        startActivityForResult(signInIntent, 1)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 1) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }
-
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-            ToastUtils.showToastLongTime("Success: " + account.displayName, this)
-        } catch (e: ApiException) {
-            ToastUtils.showToastLongTime("Failed with: " + e.message, this)
-        }
+    private fun handleLoginWithGoogleSuccess(account: GoogleSignInAccount) {
+        viewModel?.saveUserToFirebaseDatabase(account)
     }
 
     private fun handleSignInWithFingerprint() {

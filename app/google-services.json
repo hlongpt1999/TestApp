@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1015945189726",
+    "firebase_url": "https://testandroid-5f01d-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "testandroid-5f01d",
     "storage_bucket": "testandroid-5f01d.appspot.com"
   },
@@ -14,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "1015945189726-q9vjnor14guugm7b9qefbn574hj5b200.apps.googleusercontent.com",
+          "client_id": "1015945189726-gj2gmeqeug8spgm0kq1rjloq8bti2h66.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +28,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1015945189726-q9vjnor14guugm7b9qefbn574hj5b200.apps.googleusercontent.com",
+              "client_id": "1015945189726-gj2gmeqeug8spgm0kq1rjloq8bti2h66.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
