@@ -1,11 +1,7 @@
 <resources>
-    <string name="app_name">Crash App</string>
-    <string name="title_activity_test">TestActivity</string>
-    <!-- Strings used for fragments for navigation -->
+    <string name="app_name">Troll App</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -16,10 +12,7 @@
     <string name="msg_default_feature_soon">This feature will be coming soon</string>
 
 
-    <string name="title_activity_todo">TodoActivity</string>
-    <string name="title_activity_home">HomeActivity</string>
     <string name="default_notification_channel_id">280599</string>
     <string name="msg_notification_permission_granted">Notifications permission granted</string>
     <string name="msg_notification_permission_failed">FCM can not post notifications without POST_NOTIFICATIONS permission</string>
-    <string name="title_activity_flash">FlashActivity</string>
 </resources>

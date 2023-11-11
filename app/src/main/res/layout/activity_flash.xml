@@ -12,15 +12,16 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-
-        <TextView
-            android:id="@+id/tvPosition"
-            android:layout_width="match_parent"
-            android:text="test"
-            android:gravity="center"
-            android:textSize="50dp"
-            android:textColor="@color/green"
-            android:layout_height="match_parent"/>
+        <ImageView
+            android:layout_width="@dimen/dimen_0"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_troll"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

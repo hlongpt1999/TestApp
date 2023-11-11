@@ -1,10 +1,8 @@
-package com.example.testandroid.unittest
+package com.example.testandroid.service.unittest
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.testandroid.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.testandroid.databinding.ActivityTestBinding
-import com.example.testandroid.function.OpenActivity.openMainActivity
 import com.example.testandroid.function.OpenActivity.openPipActivity
 import com.example.testandroid.function.Utils
 
