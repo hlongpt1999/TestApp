@@ -15,4 +15,7 @@
     <color name="orange">#FF5722</color>
 
     <color name="main">#FF5722</color>
+    <color name="colorPrimary">#FF5722</color>
+    <color name="colorPrimaryDark">#4D1504</color>
+    <color name="colorAccent">#F39D97</color>
 </resources>

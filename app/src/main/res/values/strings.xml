@@ -1,4 +1,12 @@
 <resources>
+    <!--RULE
+        - Message text: msg_
+        - Normal text: txt_
+        - Text with colon(example: "Title:"): label_
+        - Unit text(Singular, plural): unit_
+        - Text with format %s %d,.. into: _format
+    -->
+
     <string name="app_name">Troll App</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -15,4 +23,6 @@
     <string name="default_notification_channel_id">280599</string>
     <string name="msg_notification_permission_granted">Notifications permission granted</string>
     <string name="msg_notification_permission_failed">FCM can not post notifications without POST_NOTIFICATIONS permission</string>
+
+    <string name="txt_add_word">Add wod</string>
 </resources>

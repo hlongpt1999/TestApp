@@ -1,16 +1,15 @@
 package com.example.testandroid.module.security.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.testandroid.R
-import com.example.testandroid.databinding.ActivityFlashBinding
 import com.example.testandroid.databinding.ActivitySecurityBinding
-import com.example.testandroid.function.OpenActivity.openHomeActivity
+import com.example.testandroid.function.OpenActivity.open
 import com.example.testandroid.function.OpenActivity.openLoginActivity
+import com.example.testandroid.model.ScreenEnum
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SecurityActivity : AppCompatActivity(), View.OnClickListener,
     KeyboardAdapter.IOnClickListener {
@@ -39,7 +38,9 @@ class SecurityActivity : AppCompatActivity(), View.OnClickListener,
                 return
             }
         }
-        this.openLoginActivity()
+        //todo
+//        this.openLoginActivity()
+        this.open(ScreenEnum.DASHBOARD, true)
     }
 
     private fun initKeyBoard() {

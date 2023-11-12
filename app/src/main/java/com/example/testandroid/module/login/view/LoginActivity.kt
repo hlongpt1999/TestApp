@@ -34,11 +34,13 @@ import com.example.testandroid.module.login.viewmodel.LoginViewModel
 import com.example.testandroid.module.todo.view.ui.theme.TestAndroidTheme
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
     private var database: UserInfoDatabase? = null
-    private var userDao: UserDao? = null
 
     //Sign in with fingerprint
     private lateinit var biometricPrompt: BiometricPrompt
@@ -49,8 +51,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        initDatabase()
-//        handleAutoLogin()
+        initDatabase()
         setUpViewModel()
         setContent {
             TestAndroidTheme {
@@ -183,33 +184,34 @@ class LoginActivity : AppCompatActivity() {
                 phone = "12345",
                 gender = 1
             )
-            saveToDatabase(user)
+            viewModel?.saveToDatabase(user)
             this.openHomeActivity()
         }
     }
 
     private fun initDatabase() {
-        database = Room.databaseBuilder(
-            applicationContext,
-            UserInfoDatabase::class.java, "Info"
-        ).build()
-        userDao = database?.userDao()
-    }
-
-    private fun handleAutoLogin() {
-        userDao?.let {
-            val users: List<User> = it.getAll()
-            if (users.isNotEmpty()) {
-                this.openHomeActivity()
+        CoroutineScope(Dispatchers.IO).launch {
+            database = Room.databaseBuilder(
+                applicationContext,
+                UserInfoDatabase::class.java, "Info"
+            ).build()
+            viewModel?.userDao = database?.userDao()
+            val users: List<User>? = viewModel?.userDao?.getAll()
+            if (!users.isNullOrEmpty()) {
+                this@LoginActivity.openHomeActivity()
             }
+//            handleAutoLogin()
         }
     }
 
-    private fun saveToDatabase(user: User) {
-        userDao?.let {
-            it.insertAll(user)
-        }
-    }
+//    private fun handleAutoLogin() {
+//        viewModel?.userDao?.let {
+//            val users: List<User> = it.getAll()
+//            if (users.isNotEmpty()) {
+//                this.openHomeActivity()
+//            }
+//        }
+//    }
 
     @Composable
     private fun GoogleSignInUI() {

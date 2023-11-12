@@ -22,9 +22,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.testandroid.R
 import com.example.testandroid.function.GlobalData
+import com.example.testandroid.function.OpenActivity.open
 import com.example.testandroid.function.OpenActivity.openPipActivity
 import com.example.testandroid.function.OpenActivity.openTodoActivity
 import com.example.testandroid.function.ToastUtils.showToastLongTime
+import com.example.testandroid.model.ScreenEnum
 import com.example.testandroid.module.jetpackcompose.model.FeatureEnum
 import com.example.testandroid.module.todo.view.ui.theme.TestAndroidTheme
 import java.text.SimpleDateFormat
@@ -40,7 +42,14 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White,
                 ) {
-                    FeatureList(features = listOf(FeatureEnum.TODO, FeatureEnum.QUIZ))
+                    FeatureList(
+                        features = listOf(
+                            FeatureEnum.TODO,
+                            FeatureEnum.QUIZ,
+                            FeatureEnum.ROOM,
+                            FeatureEnum.DASHBOARD,
+                        )
+                    )
                 }
             }
         }
@@ -132,8 +141,15 @@ class HomeActivity : ComponentActivity() {
             FeatureEnum.PIP -> {
                 this.openPipActivity()
             }
+            FeatureEnum.ROOM -> {
+                this.open(ScreenEnum.ROOM)
+            }
             else -> {
-                this.showToastLongTime(getString(R.string.msg_default_feature_soon))
+                if (feature.screen == null) {
+                    this.showToastLongTime(getString(R.string.msg_default_feature_soon))
+                } else {
+                    this.open(feature.screen)
+                }
             }
         }
     }

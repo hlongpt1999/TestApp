@@ -20,6 +20,9 @@
         android:theme="@style/Theme.TestAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".module.dashboard.view.DashBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".module.login.view.LoginActivity"
             android:exported="false" />
         <activity
@@ -79,7 +82,13 @@
             android:supportsPictureInPicture="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+        <activity
+            android:name=".module.testroom.view.RoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".module.testroom.view.AddNewWordActivity"
+            android:exported="false" />
 
         <service
             android:name=".service.MyFirebaseMessagingService"

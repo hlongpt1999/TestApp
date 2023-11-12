@@ -61,26 +61,7 @@ object OpenActivity {
     }
 
     fun Activity.open(screen: ScreenEnum, finishActivity: Boolean = false, bundle: Bundle? = null) {
-        val intent = when (screen) {
-            ScreenEnum.FLASH -> {
-                Intent(this, FlashActivity::class.java)
-            }
-            ScreenEnum.SECURITY -> {
-                Intent(this, SecurityActivity::class.java)
-            }
-            ScreenEnum.LOGIN -> {
-                Intent(this, LoginActivity::class.java)
-            }
-            ScreenEnum.MAIN -> {
-                Intent(this, MainActivity::class.java)
-            }
-            ScreenEnum.HOME -> {
-                Intent(this, HomeActivity::class.java)
-            }
-            ScreenEnum.TODO -> {
-                Intent(this, TodoActivity::class.java)
-            }
-        }
+        val intent = Intent(this, screen.activity)
         this.startActivity(intent, bundle)
 
         if (finishActivity) {
